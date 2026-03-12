@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@source "./**/*.{njk,html}";
+
+@theme {
+  --color-site-ink: #54463f;
+  --color-site-muted: #72645b;
+  --color-site-paper: #f3efe6;
+  --color-site-cream: #ede3b7;
+  --color-site-blue: #d8e2e4;
+  --color-site-stone: #d6c2af;
+  --color-site-plum: #52202f;
+  --color-site-light: #fbf8f1;
+}

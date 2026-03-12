@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% if title and title != "Home" %}{{ title }} | {% endif %}{{ site.name }}</title>
+    <meta name="description" content="{{ description or site.description }}" />
+    <meta name="keywords" content="{{ site.keywords | join(', ') }}" />
+    <meta name="author" content="{{ site.author }}" />
+    <meta name="creator" content="{{ site.author }}" />
+    <meta name="publisher" content="{{ site.legalName }}" />
+    <meta name="application-name" content="{{ site.name }}" />
+    <meta name="apple-mobile-web-app-title" content="{{ site.name }}" />
+    <meta name="language" content="{{ site.language }}" />
+    <meta name="theme-color" content="{{ site.themeColor }}" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="robots" content="index,follow" />
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="bingbot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
+    <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+    <link rel="alternate" hreflang="{{ site.language }}" href="{{ site.url }}{{ page.url }}" />
+    <link rel="me" href="{{ site.linkedin }}" />
+    <link rel="me" href="{{ site.youtube }}" />
+    <link rel="me" href="{{ site.x }}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="{{ site.locale }}" />
+    <meta property="og:title" content="{% if title and title != 'Home' %}{{ title }} | {% endif %}{{ site.name }}" />
+    <meta property="og:description" content="{{ description or site.description }}" />
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
+    <meta property="og:site_name" content="{{ site.name }}" />
+    <meta property="og:image" content="{{ pageImage or site.defaultOgImage }}" />
+    <meta property="og:image:alt" content="{{ pageImageAlt or title or site.name }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{% if title and title != 'Home' %}{{ title }} | {% endif %}{{ site.name }}" />
+    <meta name="twitter:description" content="{{ description or site.description }}" />
+    <meta name="twitter:url" content="{{ site.url }}{{ page.url }}" />
+    <meta name="twitter:image" content="{{ pageImage or site.defaultOgImage }}" />
+    <meta name="twitter:image:alt" content="{{ pageImageAlt or title or site.name }}" />
+    <meta name="twitter:site" content="@jk_helloworld" />
+    <meta name="twitter:creator" content="@jk_helloworld" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "{{ site.url }}/#organization",
+            "name": "{{ site.legalName }}",
+            "url": "{{ site.url }}",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "{{ site.defaultOgImage }}"
+            },
+            "founder": {
+              "@type": "Person",
+              "name": "{{ site.founder }}"
+            },
+            "email": "{{ site.email }}",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "sales",
+              "email": "{{ site.email }}",
+              "url": "{{ site.calendarUrl }}"
+            },
+            "knowsAbout": {{ site.keywords | dump | safe }},
+            "sameAs": ["{{ site.linkedin }}", "{{ site.youtube }}", "{{ site.x }}"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "{{ site.url }}/#website",
+            "url": "{{ site.url }}",
+            "name": "{{ site.name }}",
+            "description": "{{ site.description }}",
+            "publisher": {
+              "@id": "{{ site.url }}/#organization"
+            },
+            "inLanguage": "{{ site.language }}",
+            "potentialAction": {
+              "@type": "ReserveAction",
+              "target": "{{ site.calendarUrl }}"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "{{ site.url }}{{ page.url }}#webpage",
+            "url": "{{ site.url }}{{ page.url }}",
+            "name": "{% if title and title != 'Home' %}{{ title }} | {% endif %}{{ site.name }}",
+            "description": "{{ description or site.description }}",
+            "isPartOf": {
+              "@id": "{{ site.url }}/#website"
+            },
+            "about": {
+              "@id": "{{ site.url }}/#organization"
+            },
+            "primaryImageOfPage": "{{ pageImage or site.defaultOgImage }}",
+            "inLanguage": "{{ site.language }}"
+          }
+          {% if page.url == "/" %},
+          {
+            "@type": "Service",
+            "@id": "{{ site.url }}/#service",
+            "serviceType": "AI consulting, AI adoption, and embedded AI engineering",
+            "provider": {
+              "@id": "{{ site.url }}/#organization"
+            },
+            "areaServed": "Worldwide",
+            "url": "{{ site.url }}/",
+            "description": "{{ site.description }}"
+          }
+          {% endif %}
+          {% if page.url == "/design-sprint/" or page.url == "/adoption-program/" or page.url == "/podcast/" or page.url == "/blog/" %},
+          {
+            "@type": "BreadcrumbList",
+            "@id": "{{ site.url }}{{ page.url }}#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "{{ site.url }}/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "{% if page.url == '/design-sprint/' %}AI Design Sprint{% elif page.url == '/adoption-program/' %}AI Adoption Program{% elif page.url == '/podcast/' %}Podcast{% else %}Blog{% endif %}",
+                "item": "{{ site.url }}{{ page.url }}"
+              }
+            ]
+          }
+          {% endif %}
+        ]
+      }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Newsreader', 'serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              'site-ink': '#54463f',
+              'site-muted': '#72645b',
+              'site-paper': '#f3efe6',
+              'site-cream': '#ede3b7',
+              'site-blue': '#d8e2e4',
+              'site-stone': '#d6c2af',
+              'site-plum': '#52202f',
+              'site-light': '#fbf8f1',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+      html, body { background: #f3efe6; color: #54463f; }
+      body { min-height: 100vh; }
+      .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .mobile-open { overflow: hidden; }
+      .nav-shell {
+        background: rgba(250,247,239,0.94);
+        border: 1px solid rgba(84,70,63,0.08);
+        box-shadow: 0 10px 40px rgba(84,70,63,0.06);
+        backdrop-filter: blur(16px);
+      }
+      .podcast-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.65rem 0.95rem;
+        border-radius: 9999px;
+        background: rgba(255,255,255,0.62);
+        border: 1px solid rgba(84,70,63,0.08);
+        color: rgba(84,70,63,0.9);
+        font-size: 0.95rem;
+        transition: all 0.22s ease;
+      }
+      .podcast-link:hover {
+        background: rgba(255,255,255,0.82);
+        color: #54463f;
+      }
+      .podcast-link svg {
+        width: 1rem;
+        height: 1rem;
+        opacity: 0.8;
+      }
+      .nav-link {
+        color: rgba(84,70,63,0.86);
+        transition: color 0.22s ease;
+      }
+      .nav-link:hover {
+        color: #54463f;
+      }
+      .eyebrow {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(84,70,63,0.8);
+      }
+      .hero-word {
+        font-family: 'Newsreader', serif;
+        font-weight: 400;
+        font-size: clamp(3.8rem, 10vw, 7.4rem);
+        line-height: 0.94;
+        letter-spacing: -0.05em;
+      }
+      .hero-word em,
+      .display-italic {
+        font-style: italic;
+      }
+      .display-title {
+        font-family: 'Newsreader', serif;
+        font-weight: 400;
+        letter-spacing: -0.045em;
+        line-height: 0.96;
+      }
+      .section-card {
+        background: rgba(251,248,241,0.64);
+        border: 1px solid rgba(84,70,63,0.08);
+        box-shadow: 0 8px 30px rgba(84,70,63,0.04);
+      }
+      .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+        border-radius: 9999px;
+        background: rgba(255,255,255,0.82);
+        border: 1px solid rgba(84,70,63,0.08);
+        color: #54463f;
+        box-shadow: 0 8px 24px rgba(84,70,63,0.05);
+      }
+      .feature-icon svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+      .pill-btn,
+      .ghost-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        padding: 0.95rem 1.4rem;
+        font-size: 0.95rem;
+        transition: all 0.22s ease;
+      }
+      .pill-btn {
+        background: rgba(243,239,230,0.9);
+        color: #54463f;
+        border: 1px solid rgba(84,70,63,0.08);
+      }
+      .pill-btn:hover {
+        transform: translateY(-1px);
+        background: rgba(251,248,241,1);
+      }
+      .ghost-btn {
+        background: rgba(255,255,255,0.36);
+        color: #54463f;
+        border: 1px solid rgba(84,70,63,0.08);
+      }
+      .ghost-btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255,255,255,0.56);
+      }
+      .texture-blur::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(255,243,188,0.72), transparent 18%),
+          radial-gradient(circle at 40% 55%, rgba(255,246,212,0.78), transparent 16%),
+          radial-gradient(circle at 72% 30%, rgba(249,233,182,0.58), transparent 18%),
+          radial-gradient(circle at 65% 78%, rgba(255,241,198,0.65), transparent 18%);
+        filter: blur(18px);
+        opacity: 0.85;
+        pointer-events: none;
+      }
+      .plum-texture::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 25% 30%, rgba(170,66,82,0.34), transparent 20%),
+          radial-gradient(circle at 60% 35%, rgba(120,39,63,0.36), transparent 18%),
+          radial-gradient(circle at 72% 68%, rgba(155,70,88,0.28), transparent 18%),
+          radial-gradient(circle at 38% 82%, rgba(111,34,54,0.24), transparent 18%);
+        filter: blur(24px);
+        pointer-events: none;
+      }
+      .quote-line {
+        width: 100%;
+        height: 1px;
+        background: rgba(84,70,63,0.12);
+      }
+      .article-content {
+        color: #54463f;
+        font-size: 1.18rem;
+        line-height: 1.95;
+      }
+      .article-content > * + * {
+        margin-top: 1.35rem;
+      }
+      .article-content h2,
+      .article-content h3 {
+        font-family: 'Newsreader', serif;
+        color: #54463f;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        margin-top: 2.75rem;
+      }
+      .article-content h2 {
+        font-size: clamp(2rem, 4.6vw, 3rem);
+      }
+      .article-content h3 {
+        font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+      }
+      .article-content a {
+        color: #52202f;
+        text-decoration: underline;
+        text-decoration-color: rgba(82,32,47,0.25);
+        text-underline-offset: 0.18em;
+      }
+      .article-content ul,
+      .article-content ol {
+        padding-left: 1.4rem;
+      }
+      .article-content li + li {
+        margin-top: 0.55rem;
+      }
+      .article-content blockquote {
+        padding-left: 1.1rem;
+        border-left: 2px solid rgba(84,70,63,0.18);
+        color: #72645b;
+        font-style: italic;
+      }
+      .article-content img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 2rem 0;
+        border-radius: 1.4rem;
+        border: 1px solid rgba(84,70,63,0.08);
+        box-shadow: 0 14px 44px rgba(84,70,63,0.08);
+        background: rgba(255,255,255,0.6);
+      }
+      .article-content figure {
+        margin: 2.2rem 0;
+      }
+      .article-content figure img {
+        margin: 0;
+      }
+      .article-content figcaption {
+        margin-top: 0.85rem;
+        text-align: center;
+        font-size: 0.92rem;
+        line-height: 1.6;
+        color: #72645b;
+      }
+      .article-content strong {
+        color: #54463f;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1; transform: none; transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="relative z-10">
+      <nav class="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+        <div class="max-w-7xl mx-auto">
+          <div class="nav-shell rounded-md px-4 sm:px-5 py-3">
+            <div class="hidden md:grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+              <div class="flex items-center">
+                <a href="/podcast/" class="podcast-link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 18a3 3 0 0 0 3-3V9a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"></path>
+                    <path d="M19 10a7 7 0 0 0-14 0"></path>
+                  </svg>
+                  <span>Podcast</span>
+                </a>
+              </div>
+              <a href="/" class="justify-self-center font-display text-3xl tracking-[-0.04em] text-site-ink whitespace-nowrap">HOPE OF AI</a>
+              <div class="flex justify-end items-center gap-6 text-sm">
+                <a href="/#about" class="nav-link">About</a>
+                <a href="/blog/" class="nav-link">Blog</a>
+                <a href="/design-sprint/" class="nav-link">AI Sprint</a>
+                <a href="/adoption-program/" class="nav-link">Programs</a>
+                <a href="{{ site.calendarUrl }}" target="_blank" rel="noopener noreferrer" class="pill-btn py-2.5 px-4 text-sm bg-site-plum text-white border-site-plum/20 hover:bg-[#3f1723]">Book a Call</a>
+              </div>
+            </div>
+
+            <div class="flex md:hidden items-center justify-between gap-4">
+              <a href="/" class="font-display text-[1.9rem] tracking-[-0.04em] text-site-ink whitespace-nowrap">HOPE OF AI</a>
+              <button id="mobile-menu-toggle" class="text-site-ink px-2 py-1 shrink-0" type="button" aria-label="Open menu">
+                Menu
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div id="mobile-menu" class="fixed inset-0 z-40 bg-site-paper/95 backdrop-blur-xl hidden md:hidden">
+        <div class="h-full flex flex-col items-center justify-center gap-5 px-6 text-site-ink">
+          <a href="/" class="font-display text-3xl">Home</a>
+          <a href="/#services" class="font-display text-3xl">Services</a>
+          <a href="/#use-cases" class="font-display text-3xl">Use Cases</a>
+          <a href="/blog/" class="font-display text-3xl">Blog</a>
+          <a href="/design-sprint/" class="font-display text-2xl">AI Design Sprint</a>
+          <a href="/adoption-program/" class="font-display text-2xl">AI Adoption Program</a>
+          <a href="/podcast/" class="font-display text-3xl">Podcast</a>
+          <a href="{{ site.calendarUrl }}" target="_blank" rel="noopener noreferrer" class="pill-btn mt-2">Let's Talk</a>
+        </div>
+      </div>
+
+      {{ content | safe }}
+
+      <footer class="bg-site-light px-4 pb-10">
+        <div class="max-w-7xl mx-auto relative overflow-hidden rounded-t-2xl border border-white/15 border-b-0">
+          <img src="/assets/footer-meadow.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(33,24,20,0.48),rgba(33,24,20,0.7),rgba(33,24,20,0.84))]"></div>
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.1),transparent_35%)]"></div>
+
+          <div class="relative z-10 px-6 py-12 md:px-10 text-white">
+            <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-12 items-start">
+              <div>
+                <div class="eyebrow mb-4 text-white/70">Hope of AI</div>
+                <h2 class="display-title text-5xl md:text-6xl text-white mb-5">
+                  We build
+                  <span class="display-italic">practical intelligence.</span>
+                </h2>
+                <p class="max-w-xl text-white/72 text-lg leading-relaxed mb-8">
+                  AI that helps people do deeper work, make better decisions, and build stronger businesses.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                  <a href="{{ site.calendarUrl }}" target="_blank" rel="noopener noreferrer" class="pill-btn bg-white/90 text-site-ink border-white/20 hover:bg-white">Start a conversation</a>
+                  <a href="/podcast/" class="ghost-btn bg-white/10 text-white border-white/20 hover:bg-white/18">Listen to the podcast</a>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-8 text-white/72 text-sm">
+                <div>
+                  <div class="eyebrow mb-4 text-white/60">Explore</div>
+                  <div class="space-y-3">
+                    <div><a href="/#services" class="hover:text-white transition-colors">Services</a></div>
+                    <div><a href="/#use-cases" class="hover:text-white transition-colors">Use Cases</a></div>
+                    <div><a href="/#about" class="hover:text-white transition-colors">About</a></div>
+                    <div><a href="/blog/" class="hover:text-white transition-colors">Blog</a></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="eyebrow mb-4 text-white/60">Connect</div>
+                  <div class="space-y-3">
+                    <div><a href="{{ site.linkedin }}" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">LinkedIn</a></div>
+                    <div><a href="{{ site.youtube }}" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">YouTube</a></div>
+                    <div><a href="{{ site.x }}" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">X</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-white/15 text-center text-xs text-white/55">
+              <span>&copy; 2026 Hope of AI</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/assets/site.js"></script>
+  </body>
+</html>

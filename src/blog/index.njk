@@ -1,0 +1,101 @@
+---
+layout: layout.njk
+title: Blog
+description: Notes from Hope of AI on practical systems, human-centered adoption, and what it really takes to build with AI.
+pagination:
+  data: collections.blogPosts
+  size: 3
+  alias: posts
+permalink: "{% if pagination.pageNumber == 0 %}/blog/{% else %}/blog/page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+---
+<main>
+  <section class="min-h-[44vh] md:min-h-[50vh] relative overflow-hidden pt-28 md:pt-32">
+    <div class="absolute inset-0">
+      <img src="/assets/blog-top.png" alt="" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(250,247,239,0.16),rgba(250,247,239,0.3),rgba(250,247,239,0.82))]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.28),rgba(255,255,255,0.1)_34%,transparent_62%)]"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(to_top,rgba(37,29,25,0.3),transparent_36%)]"></div>
+    </div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 min-h-[44vh] md:min-h-[50vh] flex flex-col items-center justify-start pt-12 md:pt-16 text-center">
+      <div class="reveal">
+        <h1 class="hero-word text-site-ink drop-shadow-[0_2px_10px_rgba(255,255,255,0.35)]">
+          Practical ideas.
+          <span class="display-italic block">Human direction.</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative z-10 bg-site-light -mt-8 md:-mt-10 pt-10 pb-24 md:pt-14 md:pb-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="mb-12 reveal">
+        <div class="eyebrow">Latest Posts</div>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3 reveal">
+        {% for post in posts %}
+          <article class="section-card rounded-[1.75rem] overflow-hidden">
+            {% if post.data.pageImage %}
+              <a href="{{ post.url }}" class="block">
+                <img
+                  src="{{ post.data.pageImage }}"
+                  alt="{{ post.data.pageImageAlt or post.data.title }}"
+                  class="w-full h-[14rem] md:h-[18rem] object-cover"
+                />
+              </a>
+            {% endif %}
+            <div class="p-8 md:p-10">
+              <div class="eyebrow mb-4">{{ post.date | readableDate }}</div>
+              <h3 class="display-title text-4xl text-site-ink mb-4">
+                <a href="{{ post.url }}" class="hover:opacity-80 transition-opacity">{{ post.data.title }}</a>
+              </h3>
+              <p class="text-site-muted text-lg leading-relaxed max-w-3xl">{{ post.data.description }}</p>
+              <div class="mt-7">
+                <a href="{{ post.url }}" class="pill-btn">Read article</a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if pagination.hrefs and pagination.hrefs.length > 1 %}
+        <nav class="mt-12 flex flex-wrap items-center justify-center gap-3 reveal" aria-label="Blog pagination">
+          {% if pagination.pageNumber > 0 %}
+            <a href="{{ pagination.hrefs[pagination.pageNumber - 1] }}" class="ghost-btn">Previous</a>
+          {% endif %}
+
+          {% for href in pagination.hrefs %}
+            <a
+              href="{{ href }}"
+              class="{% if loop.index0 == pagination.pageNumber %}pill-btn bg-site-ink text-white border-site-ink/20 hover:bg-[#463a34]{% else %}ghost-btn{% endif %}"
+              aria-current="{% if loop.index0 == pagination.pageNumber %}page{% else %}false{% endif %}"
+            >
+              {{ loop.index }}
+            </a>
+          {% endfor %}
+
+          {% if pagination.pageNumber < pagination.hrefs.length - 1 %}
+            <a href="{{ pagination.hrefs[pagination.pageNumber + 1] }}" class="ghost-btn">Next</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="bg-site-paper py-24 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 text-center reveal">
+      <div class="eyebrow mb-5">Want to Build?</div>
+      <h2 class="display-title text-[clamp(3rem,7vw,5rem)] text-site-ink">
+        Ideas are useful when they become
+        <span class="display-italic">working systems.</span>
+      </h2>
+      <p class="mt-5 max-w-2xl mx-auto text-lg text-site-muted">
+        If one of these ideas connects with something your team is trying to build, let’s talk through the workflow and make it concrete.
+      </p>
+      <div class="mt-9 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="{{ site.calendarUrl }}" target="_blank" rel="noopener noreferrer" class="pill-btn bg-site-ink text-white border-site-ink/20 hover:bg-[#463a34]">Book a call</a>
+        <a href="/" class="ghost-btn">See what we do</a>
+      </div>
+    </div>
+  </section>
+</main>

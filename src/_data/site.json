@@ -1,0 +1,26 @@
+{
+  "name": "Hope of AI",
+  "legalName": "Hope of AI",
+  "url": "https://hopeofai.com",
+  "description": "Hope of AI helps businesses build with AI, upskill their teams, and embed engineers who work alongside their people.",
+  "locale": "en_US",
+  "language": "en",
+  "author": "Jayakrishnan J R a.k.a JK",
+  "founder": "Jayakrishnan J R a.k.a JK",
+  "themeColor": "#f3efe6",
+  "email": "mailhopeofai@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/jrjayakrishnan/",
+  "youtube": "https://www.youtube.com/@HopeofAI",
+  "x": "https://x.com/jk_helloworld",
+  "calendarUrl": "https://calendly.com/mailhopeofai/30min",
+  "defaultOgImage": "https://hopeofai.com/assets/header-landscape.png",
+  "keywords": [
+    "AI consulting",
+    "AI adoption",
+    "AI integration",
+    "embedded AI engineers",
+    "AI design sprint",
+    "team upskilling",
+    "Hope of AI"
+  ]
+}

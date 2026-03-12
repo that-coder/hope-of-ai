@@ -1,0 +1,85 @@
+---
+layout: layout.njk
+---
+<main>
+  <section class="bg-site-light pt-32 pb-16 md:pt-36 md:pb-20">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="reveal">
+        <h1 class="display-title text-[clamp(3rem,7vw,5rem)] text-site-ink">{{ title }}</h1>
+        {% if description %}
+          <p class="mt-5 text-lg md:text-xl text-site-muted leading-relaxed max-w-2xl">{{ description }}</p>
+        {% endif %}
+        <div class="mt-8 flex flex-wrap items-center gap-3 text-sm text-site-muted">
+          <time datetime="{{ page.date | htmlDate }}">{{ page.date | readableDate }}</time>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% if pageImage %}
+    <section class="bg-site-light pb-10 md:pb-14">
+      <div class="max-w-5xl mx-auto px-6 reveal">
+        <figure class="section-card rounded-[2rem] p-3 md:p-4">
+          <img
+            src="{{ pageImage }}"
+            alt="{{ pageImageAlt or title }}"
+            class="w-full h-auto max-h-[34rem] object-cover rounded-[1.4rem]"
+          />
+          {% if pageImageCaption %}
+            <figcaption class="px-4 pt-4 pb-2 text-center text-sm text-site-muted">{{ pageImageCaption }}</figcaption>
+          {% endif %}
+        </figure>
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="bg-site-paper pb-24 md:pb-28">
+    <article class="max-w-3xl mx-auto px-6 reveal">
+      <div class="section-card rounded-[2rem] p-8 md:p-12">
+        <div class="article-content">
+          {{ content | safe }}
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="bg-site-cream py-20 md:py-24">
+    <div class="max-w-4xl mx-auto px-6 text-center reveal">
+      <div class="eyebrow mb-5">Keep Reading</div>
+      <h2 class="display-title text-[clamp(2.6rem,6vw,4.4rem)] text-site-ink">
+        More ideas on
+        <span class="display-italic">practical AI.</span>
+      </h2>
+      <p class="mt-5 max-w-2xl mx-auto text-lg text-site-muted">
+        Thoughtful notes on building, adopting, and working with AI in ways that strengthen people instead of sidelining them.
+      </p>
+      <div class="mt-9 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/blog/" class="pill-btn">Back to the blog</a>
+        <a href="{{ site.calendarUrl }}" target="_blank" rel="noopener noreferrer" class="ghost-btn">Talk with us</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ title }}",
+    "description": "{{ description or site.description }}",
+    "datePublished": "{{ page.date | htmlDate }}",
+    "dateModified": "{{ page.date | htmlDate }}",
+    {% if pageImage %}
+    "image": ["{{ pageImage }}"],
+    {% endif %}
+    "author": {
+      "@type": "Organization",
+      "name": "{{ author or site.name }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ site.name }}"
+    },
+    "mainEntityOfPage": "{{ site.url }}{{ page.url }}"
+  }
+</script>
